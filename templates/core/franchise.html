@@ -1,0 +1,101 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Franchise & Partnerships</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">Expand the Fuel Network</p>
+        </div>
+    </section>
+
+    <!-- Franchise Form & Info -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row g-5">
+                <!-- Info column -->
+                <div class="col-lg-5">
+                    <h2 class="section-title mb-4">Partner <span>With Us</span></h2>
+                    <p class="text-muted">
+                        ProteinFuel is expanding rapidly from home-kitchen operations into physical retail fronts, cloud-kitchen hubs, and franchise networks across regional metros.
+                    </p>
+                    <p class="text-muted">
+                        If you share our passion for fitness nutrition, have retail operation background, and want to establish a high-protein wellness restaurant brand in your city, fill out the application form.
+                    </p>
+                    
+                    <div class="card bg-dark text-white border-warning p-4 mt-5">
+                        <h5 class="fw-bold text-warning mb-3">Why Partner with ProteinFuel?</h5>
+                        <ul class="list-unstyled mb-0">
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> Fast growing health brand</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> High gross margin product recipes</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> Full kitchen supply chain support</li>
+                            <li class="mb-2"><i class="bi bi-check-circle-fill text-warning me-2"></i> Aggregator integration & marketing blueprints</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Form column -->
+                <div class="col-lg-7">
+                    <div class="card p-4 shadow-sm border-0">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.phone.id_for_label }}" class="form-label fw-bold">Phone Number</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">Email Address</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.city.id_for_label }}" class="form-label fw-bold">Target City</label>
+                                    {{ form.city }}
+                                    {% if form.city.errors %}
+                                    <div class="text-danger small mt-1">{{ form.city.errors|join:", " }}</div>
+                                    {% endif %}
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="{{ form.investment_budget.id_for_label }}" class="form-label fw-bold">Investment Budget</label>
+                                    {{ form.investment_budget }}
+                                    {% if form.investment_budget.errors %}
+                                    <div class="text-danger small mt-1">{{ form.investment_budget.errors|join:", " }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">Application Details</label>
+                                {{ form.message }}
+                                {% if form.message.errors %}
+                                <div class="text-danger small mt-1">{{ form.message.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn btn-yellow w-100 py-3 mt-2">
+                                Submit Application <i class="bi bi-file-earmark-check ms-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

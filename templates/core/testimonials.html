@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Testimonials</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">What Our Customers Say</p>
+        </div>
+    </section>
+
+    <!-- Testimonials List -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row g-4">
+                {% for review in testimonials %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
+                            {% if review.customer_image %}
+                            <img src="{{ review.customer_image.url }}" alt="{{ review.customer_name }}" class="rounded-circle me-3" style="width: 55px; height: 55px; object-fit: cover;">
+                            {% else %}
+                            <div class="bg-warning text-dark rounded-circle me-3 d-flex align-items-center justify-content-center fw-bold" style="width: 55px; height: 55px; font-size: 1.25rem;">
+                                {{ review.customer_name|slice:":1" }}
+                            </div>
+                            {% endif %}
+                            <div>
+                                <h6 class="fw-bold m-0 text-dark">{{ review.customer_name }}</h6>
+                                <div class="text-warning small">
+                                    {% for i in "12345" %}
+                                        <i class="bi bi-star{% if forloop.counter > review.rating %}-blank{% else %}-fill{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted flex-grow-1 mb-0">"{{ review.review_text }}"</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No reviews yet.</p>
+                </div>
+                {% endfor %}
+            </div>
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+            <nav class="mt-5">
+                <ul class="pagination justify-content-center">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link text-dark bg-warning border-warning" href="?page={{ page_obj.previous_page_number }}">Previous</a>
+                    </li>
+                    {% endif %}
+                    
+                    {% for num in page_obj.paginator.page_range %}
+                    <li class="page-item {% if page_obj.number == num %}active{% endif %}">
+                        <a class="page-link {% if page_obj.number == num %}bg-dark text-white border-dark{% else %}text-dark{% endif %}" href="?page={{ num }}">{{ num }}</a>
+                    </li>
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link text-dark bg-warning border-warning" href="?page={{ page_obj.next_page_number }}">Next</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">FAQs</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">Answers to Your Queries</p>
+        </div>
+    </section>
+
+    <!-- FAQ Accordion -->
+    <section class="py-5">
+        <div class="container py-4" style="max-width: 800px;">
+            <div class="accordion" id="faqAccordionPage">
+                {% for faq in faqs %}
+                <div class="accordion-item mb-3 border-0 rounded shadow-sm">
+                    <h2 class="accordion-header" id="headingPage{{ faq.id }}">
+                        <button class="accordion-button collapsed fw-bold text-dark bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapsePage{{ faq.id }}" aria-expanded="false" aria-controls="collapsePage{{ faq.id }}">
+                            {{ faq.question }}
+                        </button>
+                    </h2>
+                    <div id="collapsePage{{ faq.id }}" class="accordion-collapse collapse" aria-labelledby="headingPage{{ faq.id }}" data-bs-parent="#faqAccordionPage">
+                        <div class="accordion-body bg-white text-muted">
+                            {{ faq.answer }}
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No FAQs found. Add some questions in the admin dashboard.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

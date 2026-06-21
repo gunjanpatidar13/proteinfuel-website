@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Product Detail Header & Media -->
+    <section class="py-5">
+        <div class="container py-4">
+            <nav aria-label="breadcrumb" class="mb-4">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'core:home' %}" class="text-dark">Home</a></li>
+                    <li class="breadcrumb-item"><a href="{% url 'catalog:product_list' %}" class="text-dark">Menu</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
+
+            <div class="row g-5">
+                <!-- Product Images Slider -->
+                <div class="col-lg-6">
+                    {% if product.images.all %}
+                    <div id="productCarousel" class="carousel slide border rounded overflow-hidden shadow-sm" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                            {% for img in product.images.all %}
+                            <div class="carousel-item {% if forloop.first %}active{% endif %}" style="height: 450px; background-color:#f8f9fa;">
+                                <img src="{{ img.image.url }}" class="d-block w-100 h-100" style="object-fit: cover;" alt="{{ product.name }}">
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% if product.images.count > 1 %}
+                        <button class="carousel-control-prev" type="button" data-bs-target="#productCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#productCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon bg-dark rounded-circle p-2" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        {% endif %}
+                    </div>
+                    {% else %}
+                    <div class="border rounded overflow-hidden shadow-sm text-center bg-light d-flex align-items-center justify-content-center" style="height: 450px;">
+                        <i class="bi bi-image text-muted display-1"></i>
+                    </div>
+                    {% endif %}
+                </div>
+
+                <!-- Product Information -->
+                <div class="col-lg-6">
+                    <span class="badge bg-dark text-white text-uppercase fw-bold mb-2 px-3 py-2" style="letter-spacing: 1px;">{{ product.category.name }}</span>
+                    <h1 class="display-5 fw-bold text-dark mb-3">{{ product.name }}</h1>
+                    
+                    <!-- Pricing and Availability -->
+                    <div class="d-flex align-items-center gap-3 mb-4">
+                        <span class="display-6 fw-bold text-dark">₹{{ product.price|floatformat:0 }}</span>
+                        {% if product.is_active %}
+                        <span class="badge bg-success-subtle text-success border border-success px-2 py-1"><i class="bi bi-check-circle-fill me-1"></i> Available</span>
+                        {% else %}
+                        <span class="badge bg-danger-subtle text-danger border border-danger px-2 py-1"><i class="bi bi-x-circle-fill me-1"></i> Out of Stock</span>
+                        {% endif %}
+                    </div>
+
+                    <h5 class="fw-bold text-dark mb-2">Description</h5>
+                    <p class="text-muted mb-4">{{ product.description|linebreaks }}</p>
+
+                    <!-- Macronutrient Metrics -->
+                    <h5 class="fw-bold text-dark mb-3">Macronutrients (Per Serving)</h5>
+                    <div class="row g-3 mb-4">
+                        <div class="col-6 col-md-3">
+                            <div class="macro-badge yellow-macro">
+                                <span class="h4 fw-bold text-dark m-0 d-block">{{ product.protein_grams }}g</span>
+                                <small class="text-muted uppercase fw-bold" style="font-size:0.7rem; letter-spacing:0.5px;">Protein</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="macro-badge">
+                                <span class="h4 fw-bold text-dark m-0 d-block">{{ product.calories }}</span>
+                                <small class="text-muted uppercase fw-bold" style="font-size:0.7rem;">Calories</small>
+                            </div>
+                        </div>
+                        {% if product.nutrition_profile %}
+                        <div class="col-6 col-md-3">
+                            <div class="macro-badge">
+                                <span class="h4 fw-bold text-dark m-0 d-block">{{ product.nutrition_profile.carbs_grams }}g</span>
+                                <small class="text-muted uppercase fw-bold" style="font-size:0.7rem;">Carbs</small>
+                            </div>
+                        </div>
+                        <div class="col-6 col-md-3">
+                            <div class="macro-badge">
+                                <span class="h4 fw-bold text-dark m-0 d-block">{{ product.nutrition_profile.fats_grams }}g</span>
+                                <small class="text-muted uppercase fw-bold" style="font-size:0.7rem;">Fats</small>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+
+                    {% if product.nutrition_profile %}
+                    <!-- Ingredients List -->
+                    <div class="accordion border rounded overflow-hidden" id="detailsAccordion">
+                        <div class="accordion-item border-0 border-bottom">
+                            <h2 class="accordion-header" id="headingIngredients">
+                                <button class="accordion-button collapsed fw-bold text-dark bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapseIngredients" aria-expanded="false" aria-controls="collapseIngredients">
+                                    Ingredients & Allergens
+                                </button>
+                            </h2>
+                            <div id="collapseIngredients" class="accordion-collapse collapse" aria-labelledby="headingIngredients" data-bs-parent="#detailsAccordion">
+                                <div class="accordion-body bg-white text-muted">
+                                    <h6 class="fw-bold text-dark mb-1">Ingredients:</h6>
+                                    <p class="small mb-3">{{ product.nutrition_profile.ingredients }}</p>
+                                    {% if product.nutrition_profile.allergen_info %}
+                                    <h6 class="fw-bold text-danger mb-1"><i class="bi bi-exclamation-triangle-fill me-1"></i> Allergen Warning:</h6>
+                                    <p class="small text-danger mb-0">{{ product.nutrition_profile.allergen_info }}</p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endif %}
+
+                    <!-- Call To Action -->
+                    <div class="mt-4">
+                        <a href="https://swiggy.com" target="_blank" class="btn btn-yellow w-100 py-3 mb-2 font-weight-bold text-uppercase">
+                            Order on Swiggy <i class="bi bi-arrow-up-right-circle ms-1"></i>
+                        </a>
+                        <a href="https://zomato.com" target="_blank" class="btn btn-dark-custom w-100 py-3 font-weight-bold text-uppercase">
+                            Order on Zomato <i class="bi bi-arrow-up-right-circle ms-1"></i>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Related Products Section -->
+            {% if related_products %}
+            <div class="row mt-5 pt-5 border-top">
+                <div class="col-12 mb-4">
+                    <h3 class="fw-bold text-dark">Related <span>Protein Items</span></h3>
+                </div>
+                {% for item in related_products %}
+                <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="premium-card h-100 d-flex flex-column" style="position: relative;">
+                        <div class="product-badge-protein">{{ item.protein_grams }}g</div>
+                        <div class="product-image-wrapper bg-light text-center" style="height: 180px; overflow: hidden;">
+                            {% if item.primary_image %}
+                            <img src="{{ item.primary_image.url }}" alt="{{ item.name }}" style="width:100%; height:100%; object-fit:cover;">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Fallback Product" style="width:100%; height:100%; object-fit:cover;">
+                            {% endif %}
+                        </div>
+                        <div class="p-3 flex-grow-1 d-flex flex-column">
+                            <h6 class="fw-bold text-dark mb-2">{{ item.name }}</h6>
+                            <div class="d-flex align-items-center justify-content-between mt-auto">
+                                <span class="fw-bold text-dark">₹{{ item.price|floatformat:0 }}</span>
+                                <a href="{% url 'catalog:product_detail' item.slug %}" class="btn btn-yellow btn-sm">
+                                    View
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </div>
+    </section>
+
+{% endblock %}

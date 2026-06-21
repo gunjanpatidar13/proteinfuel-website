@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>{% block meta_title %}{{ site_settings.meta_title|default:"ProteinFuel - Fuel Your Day With Protein" }}{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}{{ site_settings.meta_description|default:"High Protein Waffles, Shakes & Coffee Delivered Fresh. Clean ingredients, premium nutrition, and great taste." }}{% endblock %}">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.meta_title|default:"ProteinFuel - Fuel Your Day With Protein" }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.meta_description|default:"High Protein Waffles, Shakes & Coffee Delivered Fresh." }}{% endblock %}">
+    {% if site_settings.logo %}
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{{ site_settings.logo.url }}">
+    {% endif %}
+
+    <!-- Google Fonts & Bootstrap 5 & Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    
+    <!-- Custom Style Sheet -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FoodEstablishment",
+      "name": "{{ site_settings.site_name }}",
+      "image": "{% if site_settings.logo %}{{ request.scheme }}://{{ request.get_host }}{{ site_settings.logo.url }}{% endif %}",
+      "telephone": "{{ site_settings.contact_phone }}",
+      "email": "{{ site_settings.contact_email }}",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "{{ site_settings.contact_address }}"
+      },
+      "priceRange": "$$"
+    }
+    </script>
+    
+    <!-- Google Analytics -->
+    {% if site_settings.google_analytics_id %}
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ site_settings.google_analytics_id }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', '{{ site_settings.google_analytics_id }}');
+    </script>
+    {% endif %}
+
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+
+    <!-- Sticky Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'core:home' %}">
+                {% if site_settings.logo %}
+                    <img src="{{ site_settings.logo.url }}" alt="{{ site_settings.site_name }}" height="40">
+                {% else %}
+                    PROTEIN<span>FUEL</span>
+                {% endif %}
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}" href="{% url 'core:home' %}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'about' %}active{% endif %}" href="{% url 'core:about' %}">About</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.app_name == 'catalog' %}active{% endif %}" href="{% url 'catalog:product_list' %}">Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'gallery' %}active{% endif %}" href="{% url 'core:gallery' %}">Gallery</a>
+                    </li>
+                    {% comment %} <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.app_name == 'blogs' %}active{% endif %}" href="{% url 'blogs:post_list' %}">Blog</a>
+                    </li> {% endcomment %}
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'faq' %}active{% endif %}" href="{% url 'core:faq' %}">FAQs</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {% if request.resolver_match.url_name == 'contact' %}active{% endif %}" href="{% url 'core:contact' %}">Contact</a>
+                    </li>
+                    <li class="nav-item ms-lg-3 mt-2 mt-lg-0">
+                        <a class="btn btn-yellow btn-sm py-2 px-3 text-dark font-weight-bold" href="{% url 'catalog:product_list' %}">
+                            <i class="bi bi-cart3 me-1"></i> Order Now
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Message Alerts -->
+    {% if messages %}
+    <div class="container mt-3">
+        {% for message in messages %}
+        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Page Content Block -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer-custom">
+        <div class="container">
+            <div class="row g-4">
+                <!-- Brand Info -->
+                <div class="col-lg-4 col-md-6">
+                    <h5 class="text-uppercase fw-bold mb-4" style="letter-spacing: 1px;">
+                        PROTEIN<span style="color: var(--primary-yellow);">FUEL</span>
+                    </h5>
+                    <p class="text-muted mb-4">
+                        {{ site_settings.footer_about }}
+                    </p>
+                    <div class="d-flex">
+                        {% for link in social_links %}
+                        <a href="{{ link.url }}" class="footer-social-icon" target="_blank" title="{{ link.platform_name }}">
+                            <i class="bi bi-{{ link.icon_name }}"></i>
+                        </a>
+                        {% endfor %}
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="col-lg-2 col-md-6 ms-lg-auto">
+                    <h6 class="text-uppercase fw-bold mb-4">Quick Links</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="{% url 'core:home' %}">Home</a></li>
+                        <li class="mb-2"><a href="{% url 'core:about' %}">About Us</a></li>
+                        <li class="mb-2"><a href="{% url 'catalog:product_list' %}">Explore Menu</a></li>
+                        <li class="mb-2"><a href="{% url 'core:franchise' %}">Franchise</a></li>
+                        <li class="mb-2"><a href="{% url 'core:careers' %}">Careers</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Details -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-uppercase fw-bold mb-4">Get In Touch</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-3 d-flex align-items-start">
+                            <i class="bi bi-geo-alt-fill text-warning me-3 mt-1"></i>
+                            <span>{{ site_settings.contact_address }}</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-telephone-fill text-warning me-3"></i>
+                            <span>{{ site_settings.contact_phone }}</span>
+                        </li>
+                        <li class="mb-3 d-flex align-items-center">
+                            <i class="bi bi-envelope-fill text-warning me-3"></i>
+                            <span>{{ site_settings.contact_email }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter Subscription -->
+                <div class="col-lg-3 col-md-6">
+                    <h6 class="text-uppercase fw-bold mb-4">Newsletter</h6>
+                    <p class="text-muted small mb-3">Subscribe to get updates on seasonal protein specials and menu discounts.</p>
+                    <form id="newsletter-form" class="input-group">
+                        {% csrf_token %}
+                        <input type="email" name="email" class="form-control bg-dark border-secondary text-white" placeholder="Your Email" required style="border-radius: 4px 0 0 4px;">
+                        <button type="submit" class="btn btn-yellow" style="border-radius: 0 4px 4px 0; padding: 0.5rem 1rem;">
+                            <i class="bi bi-send-fill"></i>
+                        </button>
+                    </form>
+                    <div id="newsletter-message" class="mt-2 small d-none"></div>
+                </div>
+            </div>
+
+            <hr class="my-5 border-secondary">
+
+            <!-- Copyright -->
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start text-muted small">
+                    {{ site_settings.copyright_text }}
+                </div>
+                <div class="col-md-6 text-center text-md-end text-muted small mt-2 mt-md-0">
+                    Built for Fitness Food Enthusiasts.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap 5 Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- AJAX Newsletter Submission script -->
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = this;
+            const formData = new FormData(form);
+            const messageDiv = document.getElementById('newsletter-message');
+            
+            fetch("{% url 'core:newsletter_subscribe' %}", {
+                method: "POST",
+                body: formData,
+                headers: {
+                    "X-CSRFToken": formData.get('csrfmiddlewaretoken')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                messageDiv.classList.remove('d-none', 'text-danger', 'text-success', 'text-info');
+                if (data.status === 'success') {
+                    messageDiv.classList.add('text-success');
+                    form.reset();
+                } else if (data.status === 'info') {
+                    messageDiv.classList.add('text-info');
+                } else {
+                    messageDiv.classList.add('text-danger');
+                }
+                messageDiv.textContent = data.message;
+            })
+            .catch(error => {
+                messageDiv.classList.remove('d-none');
+                messageDiv.classList.add('text-danger');
+                messageDiv.textContent = "An error occurred. Please try again.";
+            });
+        });
+    </script>
+</body>
+</html>

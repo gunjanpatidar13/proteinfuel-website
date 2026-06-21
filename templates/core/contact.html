@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Contact Us</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">We'd Love to Hear From You</p>
+        </div>
+    </section>
+
+    <!-- Contact Form & Info -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row g-5">
+                <!-- Info column -->
+                <div class="col-lg-5">
+                    <h2 class="section-title mb-4">Get in <span>Touch</span></h2>
+                    <p class="text-muted mb-5">Have a question about our macro targets, bulk order discounts, or corporate kitchen setups? Drop us a line and our fitness advisors will get back to you.</p>
+                    
+                    <div class="mb-4 d-flex align-items-start">
+                        <i class="bi bi-geo-alt-fill text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Our Kitchen Location</h6>
+                            <p class="text-muted mb-0">{{ site_settings.contact_address }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 d-flex align-items-start">
+                        <i class="bi bi-telephone-fill text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Call Us</h6>
+                            <p class="text-muted mb-0">{{ site_settings.contact_phone }}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="mb-4 d-flex align-items-start">
+                        <i class="bi bi-envelope-fill text-warning me-3 mt-1" style="font-size: 1.5rem;"></i>
+                        <div>
+                            <h6 class="fw-bold mb-1">Email Us</h6>
+                            <p class="text-muted mb-0">{{ site_settings.contact_email }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Form column -->
+                <div class="col-lg-7">
+                    <div class="card p-4 shadow-sm border-0">
+                        <form method="post" novalidate>
+                            {% csrf_token %}
+                            
+                            <div class="mb-3">
+                                <label for="{{ form.name.id_for_label }}" class="form-label fw-bold">Name</label>
+                                {{ form.name }}
+                                {% if form.name.errors %}
+                                <div class="text-danger small mt-1">{{ form.name.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.email.id_for_label }}" class="form-label fw-bold">Email Address</label>
+                                {{ form.email }}
+                                {% if form.email.errors %}
+                                <div class="text-danger small mt-1">{{ form.email.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.phone.id_for_label }}" class="form-label fw-bold">Phone Number</label>
+                                {{ form.phone }}
+                                {% if form.phone.errors %}
+                                <div class="text-danger small mt-1">{{ form.phone.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">Message</label>
+                                {{ form.message }}
+                                {% if form.message.errors %}
+                                <div class="text-danger small mt-1">{{ form.message.errors|join:", " }}</div>
+                                {% endif %}
+                            </div>
+
+                            <button type="submit" class="btn btn-yellow w-100 py-3 mt-2">
+                                Send Message <i class="bi bi-send ms-2"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

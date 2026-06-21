@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Our Gallery</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">Fresh from the Kitchen</p>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row g-4">
+                {% for item in gallery_items %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="gallery-wrapper shadow-sm">
+                        <img src="{{ item.image.url }}" alt="{{ item.title|default:"ProteinFuel Image" }}" class="img-fluid w-100" style="height: 300px; object-fit: cover; transition: var(--transition-smooth);">
+                        {% if item.title %}
+                        <div class="gallery-overlay">
+                            <h5 class="text-white fw-bold text-uppercase m-0">{{ item.title }}</h5>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No images in the gallery yet. Add items in the admin panel under "Gallery Items".</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

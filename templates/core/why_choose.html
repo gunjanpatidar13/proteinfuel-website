@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Why Choose Us</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">The ProteinFuel Promise</p>
+        </div>
+    </section>
+
+    <!-- Why Choose Cards Grid -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row g-4">
+                {% for item in why_choose_items %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100 d-flex flex-column">
+                        <div class="icon-box text-warning mb-3">
+                            <i class="bi bi-{{ item.icon_name }} display-5"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">{{ item.title }}</h4>
+                        <p class="text-muted mb-0 flex-grow-1">{{ item.description }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No details added yet. Add items in the admin panel under "Why Choose Cards".</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

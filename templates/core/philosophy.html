@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">{{ homepage.nutrition_title|default:"Nutrition Philosophy" }}</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">Scienced-backed Fuel</p>
+        </div>
+    </section>
+
+    <!-- Philosophy Details -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="section-title mb-4">Why Protein <span>Matters</span></h2>
+                    <div class="text-muted mb-4 lead">
+                        {{ homepage.nutrition_content|linebreaks }}
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="card bg-dark text-white border-warning p-4">
+                        <h4 class="fw-bold text-warning mb-3"><i class="bi bi-info-circle-fill me-2"></i>Macronutrient Balance</h4>
+                        <p class="text-light small">
+                            Protein is essential for cellular repair, immune response, and structural growth. By replacing refined carbohydrates and high-fats with high-quality protein, we help you keep blood sugar levels stable, maintain muscle tissue, and promote satiety (fullness) throughout your busy day.
+                        </p>
+                        <hr class="border-secondary">
+                        <div class="row text-center mt-3 g-2">
+                            <div class="col-4">
+                                <span class="d-block fw-bold text-warning h5">4 kcal</span>
+                                <small class="text-muted">Per Gram of Protein</small>
+                            </div>
+                            <div class="col-4">
+                                <span class="d-block fw-bold text-warning h5">TEF</span>
+                                <small class="text-muted">High Thermic Effect</small>
+                            </div>
+                            <div class="col-4">
+                                <span class="d-block fw-bold text-warning h5">Essential</span>
+                                <small class="text-muted">9 Amino Acids</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Health Benefits Grid -->
+            <div class="row g-4 mt-5">
+                <div class="col-md-4">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-heart-pulse-fill display-6 text-warning mb-3 d-block"></i>
+                        <h5 class="fw-bold">Muscle Preservation</h5>
+                        <p class="text-muted small mb-0">Protects lean muscle tissue from breaking down, whether you are on a weight-loss diet or undergoing intense gym workouts.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-speedometer display-6 text-warning mb-3 d-block"></i>
+                        <h5 class="fw-bold">Metabolic Boost</h5>
+                        <p class="text-muted small mb-0">Protein has a higher Thermic Effect of Food (TEF) than carbs or fats, meaning your body burns more calories just digesting it.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-egg-fill display-6 text-warning mb-3 d-block"></i>
+                        <h5 class="fw-bold">Appetite Regulation</h5>
+                        <p class="text-muted small mb-0">Stimulates the release of satiety hormones like peptide YY and GLP-1, keeping cravings and mid-day hunger spikes at bay.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

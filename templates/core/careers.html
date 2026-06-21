@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Careers</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">Join the Fuel Team</p>
+        </div>
+    </section>
+
+    <!-- Open Positions -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row mb-5">
+                <div class="col-lg-6 mx-auto text-center">
+                    <h2 class="section-title center mx-auto">Open <span>Positions</span></h2>
+                    <p class="text-muted mt-3">We are looking for dieticians, kitchen staff, operations specialists, and brand growth hackers to help build India's premier fitness snack brand.</p>
+                </div>
+            </div>
+
+            <div class="row g-4 justify-content-center" style="max-width: 900px; margin: 0 auto;">
+                {% for job in jobs %}
+                <div class="col-12">
+                    <div class="premium-card p-4 d-flex justify-content-between align-items-center flex-wrap gap-3">
+                        <div>
+                            <h4 class="fw-bold mb-1 text-dark">{{ job.position }}</h4>
+                            <span class="badge bg-dark text-white me-2"><i class="bi bi-geo-alt-fill me-1"></i> {{ job.location }}</span>
+                            <span class="badge bg-warning text-dark"><i class="bi bi-briefcase-fill me-1"></i> Full Time</span>
+                        </div>
+                        <div>
+                            <a href="{% url 'core:job_apply' job.id %}" class="btn btn-yellow">
+                                Apply Now <i class="bi bi-chevron-right ms-1"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No open positions at the moment. Please check back later!</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+{% endblock %}

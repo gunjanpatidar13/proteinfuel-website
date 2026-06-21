@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Page Header -->
+    <section class="section-dark py-5 bg-dark text-center" style="border-bottom: 2px solid var(--primary-yellow);">
+        <div class="container py-4">
+            <h1 class="display-4 fw-bold text-white mb-2">Our Story</h1>
+            <p class="text-warning mb-0 text-uppercase fw-bold small" style="letter-spacing: 2px;">About ProteinFuel</p>
+        </div>
+    </section>
+
+    <!-- Content Sections -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <h2 class="section-title mb-4">Why We <span>Started</span></h2>
+                    <p class="lead text-dark fw-semibold">
+                        ProteinFuel was born out of a simple struggle: finding delicious, convenient, and truly high-protein foods that don't compromise on ingredients.
+                    </p>
+                    <p class="text-muted">
+                        Operating initially from a humble home kitchen and dispatching orders via Swiggy and Zomato, we realized that health-conscious consumers are constantly forced to choose between chalky protein supplements and high-calorie cheat meals. We decided to bridge this gap by offering daily fast-food staples like waffles, pancakes, and cold coffee, completely re-engineered with clean proteins and high nutritional yields.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    {% if homepage.hero_image %}
+                    <img src="{{ homepage.hero_image.url }}" alt="About ProteinFuel" class="img-fluid rounded shadow border border-warning" style="width: 100%; max-height: 400px; object-fit: cover;">
+                    {% else %}
+                    <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="About ProteinFuel" class="img-fluid rounded shadow" style="width:100%;">
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Mission and Vision -->
+            <div class="row mt-5 g-4">
+                <div class="col-md-6">
+                    <div class="premium-card p-5 h-100 border-start border-4 border-warning">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-bullseye display-5 text-warning me-3"></i>
+                            <h3 class="fw-bold m-0">Our Mission</h3>
+                        </div>
+                        <p class="text-muted mb-0">
+                            Our mission is to help people consume more protein and meet their daily nutritional needs through delicious, wholesome foods. We aim to replace empty-calorie snacks with clean, protein-packed foods that support active, healthy lifestyles.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="premium-card p-5 h-100 border-start border-4 border-dark">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="bi bi-eye-fill display-5 text-dark me-3"></i>
+                            <h3 class="fw-bold m-0">Our Vision</h3>
+                        </div>
+                        <p class="text-muted mb-0">
+                            We envision expanding from a home kitchen into physical store outlets, cloud kitchen hubs, and franchised retail fronts across India, establishing ProteinFuel as the leading national brand for fitness nutrition and clean functional foods.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block meta_title %}Page Not Found - ProteinFuel{% endblock %}
+
+{% block content %}
+    <section class="section-dark py-5 bg-dark text-center d-flex align-items-center" style="min-height: 70vh;">
+        <div class="container py-5">
+            <div class="row justify-content-center">
+                <div class="col-lg-7">
+                    <span class="display-1 fw-bold text-warning d-block mb-3" style="letter-spacing: -2px;">404</span>
+                    <h2 class="h1 fw-bold text-white mb-3">Out of Bounds!</h2>
+                    <p class="lead text-light opacity-90 mb-5">
+                        Looks like you wandered out of our delivery geofence or this protein spec is sold out. Let's get you back on track to hit those macro targets!
+                    </p>
+                    <div class="d-flex justify-content-center gap-3 flex-wrap">
+                        <a href="{% url 'core:home' %}" class="btn btn-yellow px-4 py-3">
+                            <i class="bi bi-house-door-fill me-2"></i> Go Home
+                        </a>
+                        <a href="{% url 'catalog:product_list' %}" class="btn btn-outline-yellow px-4 py-3">
+                            <i class="bi bi-cart3 me-2"></i> View Menu
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

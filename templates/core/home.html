@@ -1,0 +1,318 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Hero Section -->
+    <section class="section-dark py-5 d-flex align-items-center" style="min-height: 80vh; background: linear-gradient(135deg, rgba(18, 18, 18, 0.95) 40%, rgba(18, 18, 18, 0.7)), {% if homepage.hero_image %}url('{{ homepage.hero_image.url }}'){% else %}url('https://images.unsplash.com/photo-1546069901-ba9599a7e63c'){% endif %} no-repeat center center/cover;">
+        <div class="container py-5">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <span class="badge bg-warning text-dark text-uppercase fw-bold mb-3 px-3 py-2" style="letter-spacing: 1px;">Cloud Kitchen Open</span>
+                    <h1 class="display-3 fw-bold mb-3 text-white uppercase" style="letter-spacing: -1px; line-height: 1.1;">
+                        {{ homepage.hero_headline|default:"Fuel Your Day With Protein" }}
+                    </h1>
+                    <p class="lead text-light mb-5 opacity-90">
+                        {{ homepage.hero_subheadline|default:"High Protein Waffles, Shakes & Coffee Delivered Fresh" }}
+                    </p>
+                    <div class="d-flex flex-wrap gap-3">
+                        <a href="{{ homepage.hero_button_url }}" class="btn btn-yellow btn-lg py-3 px-4">
+                            <i class="bi bi-cart3 me-2"></i> {{ homepage.hero_button_text|default:"Order Now" }}
+                        </a>
+                        <a href="{% url 'core:about' %}" class="btn btn-outline-yellow btn-lg py-3 px-4">
+                            Explore Story
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    {% comment %}
+    <!-- Statistics Section -->
+    <section class="bg-dark text-white py-5 border-bottom border-warning">
+        <div class="container">
+            <div class="row g-4">
+                {% for stat in stat_cards %}
+                <div class="col-md-4 col-sm-6 text-center">
+                    <div class="stat-box">
+                        <h2 class="display-4 fw-extrabold text-warning m-0">{{ stat.value }}</h2>
+                        <p class="text-uppercase text-muted m-0 small fw-bold mt-2" style="letter-spacing: 1.5px;">{{ stat.label }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-md-4 col-sm-6 text-center">
+                    <div class="stat-box">
+                        <h2 class="display-4 fw-extrabold text-warning m-0">10000+</h2>
+                        <p class="text-uppercase text-muted m-0 small fw-bold mt-2">Healthy Meals Served</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 text-center">
+                    <div class="stat-box">
+                        <h2 class="display-4 fw-extrabold text-warning m-0">5000+</h2>
+                        <p class="text-uppercase text-muted m-0 small fw-bold mt-2">Happy Customers</p>
+                    </div>
+                </div>
+                <div class="col-md-4 col-sm-6 text-center">
+                    <div class="stat-box">
+                        <h2 class="display-4 fw-extrabold text-warning m-0">50+</h2>
+                        <p class="text-uppercase text-muted m-0 small fw-bold mt-2">Cities Reached</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endcomment %}
+
+    <!-- Why Choose Us Cards -->
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="section-title center mx-auto">{{ homepage.why_choose_title|default:"Why Choose ProteinFuel" }}</h2>
+                <p class="text-muted mt-3">{{ homepage.why_choose_subtitle|default:"We blend premium protein with delicious recipes." }}</p>
+            </div>
+            
+            <div class="row g-4">
+                {% for item in why_choose_items %}
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100 d-flex flex-column">
+                        <div class="icon-box text-warning mb-3">
+                            <i class="bi bi-{{ item.icon_name }} display-5"></i>
+                        </div>
+                        <h4 class="fw-bold mb-2">{{ item.title }}</h4>
+                        <p class="text-muted flex-grow-1 mb-0">{{ item.description }}</p>
+                    </div>
+                </div>
+                {% empty %}
+                <!-- Fallback defaults -->
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-lightning-charge-fill display-5 text-warning mb-3 d-block"></i>
+                        <h4 class="fw-bold mb-2">High Protein</h4>
+                        <p class="text-muted mb-0">Every meal is fortified with top-tier whey/plant isolates to hit your daily macro targets.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-emoji-smile-fill display-5 text-warning mb-3 d-block"></i>
+                        <h4 class="fw-bold mb-2">Great Taste</h4>
+                        <p class="text-muted mb-0">No chalky textures. We run extensive kitchen trials to guarantee restaurant-grade flavors.</p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="premium-card p-4 h-100">
+                        <i class="bi bi-shield-x display-5 text-warning mb-3 d-block"></i>
+                        <h4 class="fw-bold mb-2">No Junk</h4>
+                        <p class="text-muted mb-0">Zero refined sugars, zero seed oils, and absolutely no artificial food coloring.</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="d-flex align-items-end justify-content-between mb-5 flex-wrap gap-3">
+                <div>
+                    <h2 class="section-title">Latest <span>Best Sellers</span></h2>
+                    <p class="text-muted mt-2">Ditch the cheats. Order high protein snacks ready in minutes.</p>
+                </div>
+                <a href="{% url 'catalog:product_list' %}" class="btn btn-dark-custom">
+                    Explore Full Menu <i class="bi bi-arrow-right ms-2"></i>
+                </a>
+            </div>
+
+            <div class="row g-4">
+                {% for product in featured_products %}
+                <div class="col-lg-3 col-md-6">
+                    <div class="premium-card h-100 d-flex flex-column relative" style="position: relative;">
+                        <!-- Protein Badge -->
+                        <div class="product-badge-protein">{{ product.protein_grams }}g Protein</div>
+                        
+                        <div class="product-image-wrapper bg-light text-center" style="height: 220px; overflow: hidden;">
+                            {% if product.primary_image %}
+                            <img src="{{ product.primary_image.url }}" alt="{{ product.name }}" style="width:100%; height:100%; object-fit:cover;">
+                            {% else %}
+                            <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c" alt="Fallback Product" style="width:100%; height:100%; object-fit:cover;">
+                            {% endif %}
+                        </div>
+                        
+                        <div class="p-3 flex-grow-1 d-flex flex-column">
+                            <span class="text-uppercase text-muted font-weight-bold small mb-1">{{ product.category.name }}</span>
+                            <h5 class="fw-bold mb-2 text-dark">{{ product.name }}</h5>
+                            <p class="text-muted small flex-grow-1 text-truncate-2" style="max-height: 40px; overflow: hidden;">
+                                {{ product.description|truncatewords:8 }}
+                            </p>
+                            
+                            <!-- Product Nutrition brief -->
+                            <div class="row text-center mb-3 g-2 bg-light p-2 rounded">
+                                <div class="col-6 border-end">
+                                    <small class="d-block text-muted">Kcal</small>
+                                    <span class="fw-bold text-dark">{{ product.calories }}</span>
+                                </div>
+                                <div class="col-6">
+                                    <small class="d-block text-muted">Protein</small>
+                                    <span class="fw-bold text-warning">{{ product.protein_grams }}g</span>
+                                </div>
+                            </div>
+                            
+                            <!-- Price & Button -->
+                            <div class="d-flex align-items-center justify-content-between mt-auto">
+                                <span class="product-price">₹{{ product.price|floatformat:0 }}</span>
+                                <a href="{% url 'catalog:product_detail' product.slug %}" class="btn btn-yellow btn-sm">
+                                    View Detail
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">No featured products available. Add items to catalog and flag them as "featured" in the admin panel.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Philosophy Section -->
+    <section class="section-dark py-5 text-white bg-dark">
+        <div class="container py-4">
+            <div class="row align-items-center g-5">
+                <div class="col-lg-6">
+                    <span class="text-warning text-uppercase fw-bold small" style="letter-spacing: 2px;">The Core Engine</span>
+                    <h2 class="display-5 fw-bold mt-2 mb-4 text-white">
+                        {{ homepage.nutrition_title|default:"Our Nutrition Philosophy" }}
+                    </h2>
+                    <div class="lead text-light mb-4">
+                        {{ homepage.nutrition_content|linebreaks }}
+                    </div>
+                    <a href="{% url 'core:philosophy' %}" class="btn btn-yellow">
+                        Read Philosophy
+                    </a>
+                </div>
+                <div class="col-lg-6">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="premium-card-dark p-4 text-center">
+                                <span class="display-6 fw-bold text-warning d-block mb-1">PROTEIN</span>
+                                <small class="text-muted">Repair & Grow Muscle</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="premium-card-dark p-4 text-center">
+                                <span class="display-6 fw-bold text-warning d-block mb-1">CARBS</span>
+                                <small class="text-muted">High Quality Fuel</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="premium-card-dark p-4 text-center">
+                                <span class="display-6 fw-bold text-warning d-block mb-1">FATS</span>
+                                <small class="text-muted">Hormone Optimization</small>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="premium-card-dark p-4 text-center">
+                                <span class="display-6 fw-bold text-warning d-block mb-1">FIBER</span>
+                                <small class="text-muted">Digestive Health</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Slider Section -->
+    <section class="py-5">
+        <div class="container py-4">
+            <div class="text-center mb-5">
+                <h2 class="section-title center mx-auto">Customer Testimonials</h2>
+                <p class="text-muted mt-3">What fitness enthusiasts say about ProteinFuel meals.</p>
+            </div>
+
+            <div class="row g-4">
+                {% for review in testimonials %}
+                <div class="col-md-4">
+                    <div class="premium-card p-4 h-100 d-flex flex-column">
+                        <div class="d-flex align-items-center mb-3">
+                            {% if review.customer_image %}
+                            <img src="{{ review.customer_image.url }}" alt="{{ review.customer_name }}" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">
+                            {% else %}
+                            <div class="bg-warning text-dark rounded-circle me-3 d-flex align-items-center justify-content-center fw-bold" style="width: 50px; height: 50px;">
+                                {{ review.customer_name|slice:":1" }}
+                            </div>
+                            {% endif %}
+                            <div>
+                                <h6 class="fw-bold m-0 text-dark">{{ review.customer_name }}</h6>
+                                <div class="text-warning small">
+                                    {% for i in "12345" %}
+                                        <i class="bi bi-star{% if forloop.counter > review.rating %}-blank{% else %}-fill{% endif %}"></i>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-muted flex-grow-1 m-0">"{{ review.review_text }}"</p>
+                    </div>
+                </div>
+                {% empty %}
+                <div class="col-12 text-center">
+                    <p class="text-muted">No testimonials added yet. Log in to the admin panel and add client feedback.</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-5 bg-light">
+        <div class="container py-4">
+            <div class="row">
+                <div class="col-lg-5">
+                    <h2 class="section-title mb-4">Frequently Asked <span>Questions</span></h2>
+                    <p class="text-muted">Have queries about custom menus, delivery geofencing, or allergen content? Here are quick answers.</p>
+                    <a href="{% url 'core:faq' %}" class="btn btn-dark-custom btn-sm mt-2">View All FAQs</a>
+                </div>
+                <div class="col-lg-7 mt-4 mt-lg-0">
+                    <div class="accordion" id="faqAccordion">
+                        {% for faq in faqs %}
+                        <div class="accordion-item mb-2 border-0 rounded shadow-sm">
+                            <h2 class="accordion-header" id="heading{{ faq.id }}">
+                                <button class="accordion-button collapsed fw-bold text-dark bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{ faq.id }}" aria-expanded="false" aria-controls="collapse{{ faq.id }}">
+                                    {{ faq.question }}
+                                </button>
+                            </h2>
+                            <div id="collapse{{ faq.id }}" class="accordion-collapse collapse" aria-labelledby="heading{{ faq.id }}" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body bg-white text-muted">
+                                    {{ faq.answer }}
+                                </div>
+                            </div>
+                        </div>
+                        {% empty %}
+                        <p class="text-muted">FAQs will appear here when registered in the database.</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5 text-center section-dark bg-dark relative" style="border-top: 3px solid var(--primary-yellow);">
+        <div class="container py-5">
+            <h2 class="display-4 fw-bold text-white mb-3">
+                {{ homepage.cta_title|default:"Start Your Protein Journey Today" }}
+            </h2>
+            <p class="lead text-light mb-4 opacity-90 mx-auto" style="max-width: 600px;">
+                {{ homepage.cta_subtitle|default:"Fuel your gains with our high protein menu items." }}
+            </p>
+            <a href="{{ homepage.cta_button_url }}" class="btn btn-yellow btn-lg py-3 px-5 fw-bold">
+                <i class="bi bi-cart3 me-2"></i> {{ homepage.cta_button_text|default:"Explore Menu" }}
+            </a>
+        </div>
+    </section>
+
+{% endblock %}
