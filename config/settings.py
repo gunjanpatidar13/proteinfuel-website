@@ -78,7 +78,7 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DB_ENGINE = os.environ.get('DB_ENGINE', 'django.db.backends.postgresql')
 DB_NAME = os.environ.get('DB_NAME', 'proteinfuel')
 DB_USER = os.environ.get('DB_USER', 'postgres')
-DB_PASSWORD = os.environ.get('DB_PASSWORD', 'postgres')
+DB_PASSWORD = os.environ.get('DB_PASSWORD', 'root')
 DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 

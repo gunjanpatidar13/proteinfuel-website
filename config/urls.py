@@ -29,5 +29,5 @@ from django.urls import re_path
 from apps.core.views import error_404_view
 
 urlpatterns += [
-    re_path(r'^.*$', error_404_view),
+    re_path(r'^.*/$', error_404_view),
 ]
