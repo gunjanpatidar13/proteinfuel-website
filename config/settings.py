@@ -16,7 +16,7 @@ if allowed_hosts_env:
     ALLOWED_HOSTS = [host.strip() for host in allowed_hosts_env.split(',')]
 else:
     if DEBUG:
-        ALLOWED_HOSTS = ["13.48.136.203","proteinfuel.co.in","www.proteinfuel.co.in"]
+        ALLOWED_HOSTS = ["*","13.48.136.203","proteinfuel.co.in","www.proteinfuel.co.in"]
     else:
         ALLOWED_HOSTS = ['localhost', '127.0.0.1']
 
