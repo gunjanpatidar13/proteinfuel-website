@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -85,10 +86,13 @@ DB_HOST = os.environ.get('DB_HOST', 'localhost')
 DB_PORT = os.environ.get('DB_PORT', '5432')
 
 
-AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
-AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
-AWS_S3_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_STORAGE_BUCKET_NAME')
-DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE')
+# AWS_S3_ACCESS_KEY_ID = os.environ.get('AWS_S3_ACCESS_KEY_ID')
+# AWS_S3_SECRET_ACCESS_KEY = os.environ.get('AWS_S3_SECRET_ACCESS_KEY')
+# AWS_S3_STORAGE_BUCKET_NAME = os.environ.get('AWS_S3_STORAGE_BUCKET_NAME')
+AWS_S3_ACCESS_KEY_ID = config("AWS_S3_ACCESS_KEY_ID")
+AWS_S3_SECRET_ACCESS_KEY = config("AWS_S3_SECRET_ACCESS_KEY")
+AWS_S3_STORAGE_BUCKET_NAME = config("AWS_S3_STORAGE_BUCKET_NAME")
+DEFAULT_FILE_STORAGE = config("DEFAULT_FILE_STORAGE")
 
 # Toggle to allow local developers to use SQLite if they don't have Postgres running locally
 USE_SQLITE = os.environ.get('USE_SQLITE', 'False').lower() in ('true', '1', 'yes')
