@@ -1,4 +1,4 @@
-name: First Workflow
+name: First GitHub Action
 
 on:
   push:
@@ -6,9 +6,21 @@ on:
       - main
 
 jobs:
-  test:
+  first-job:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
       - name: Print Message
-        run: echo "Jai shree ram!"
+        run: echo "Jai Shri Ram 🚩"
+
+      - name: Check Python Version
+        run: python3 --version
+
+      - name: Show Current Directory
+        run: pwd
+
+      - name: List Files
+        run: ls -la
